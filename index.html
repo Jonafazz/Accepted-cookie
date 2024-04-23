@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="black-div">
+        <p>
+            This website uses cookies to ensure you get the best experience. Do you accept?
+        </p>
+        <button id="red-button"> <b>Accept</b></button>
+    </div>
+
+    <script>
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();//kthen ne strig, sepse cookies  nuk marrin vlere tjeter
+            }
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+        //function per te marre cookie
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        //check if cookie is set
+        let user = getCookie("cookieAccepted");
+        if (user === "") {
+            document.getElementById("black-div").style.display = "flex";
+        }
+
+        //event listener for accept cookie
+        document.getElementById("red-button").addEventListener("click", function () {
+            setCookie("cookieAccepted", "true", 365);// cookie expires for 1 year
+            document.getElementById("black-div").style.display = "none";
+        })
+    </script>
+</body>
+
+</html>
